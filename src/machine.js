@@ -13,15 +13,18 @@ class Machine {
   addCredit() {
     if(this.readyToPlay) { throw new Error("Machine is already in credit"); }
     this.player.insertCoin();
-    this._totalBalance += 3;
-    this.readyToPlay = true;
+    this._prepareMachine();
   }
 
   pullLever() {
     if(!this.readyToPlay) { throw new Error("Please insert £3 to play"); }
     this.readyToPlay = false;
-    var slotResult = this.slots.spin();
-    return this._calculateOutcome(slotResult);
+    return this._calculateOutcome(this.slots.spin());
+  }
+
+  _prepareMachine() {
+    this._totalBalance += 3;
+    this.readyToPlay = true;
   }
 
   _calculateOutcome(result) {
