@@ -3,6 +3,11 @@ function Machine(slots) {
   this.readyToPlay = false;
   this.slots = slots;
 
+  this._payout = function(player) {
+    player.receiveWinnings(this._totalBalance);
+    this._totalBalance = 0;
+  };
+
   Machine.prototype.currentBalance = function () {
     return this._totalBalance;
   };
@@ -17,21 +22,18 @@ function Machine(slots) {
   Machine.prototype.pullLever = function (player) {
     if(!this.readyToPlay) { throw new Error("Please insert £3 to play"); }
     this.readyToPlay = false;
-    var outcome = _calculateOutcome(this.slots.spin());
-    return outcome === true ? _win(player) : _lose;
+    var slotResult = this.slots.spin();
+    var outcome = _calculateOutcome(slotResult);
+    return outcome === true ? _win(player, slotResult) : _lose(slotResult);
   };
 
   function _calculateOutcome(result) {
     return !!result.reduce(function(a, b){ return (a === b) ? a : NaN; });
   }
 
-  function _win(player) {
-    _payOut(player);
-    return 'You win';
-  }
-
-  function _payOut(player) {
-    player.receiveWinnings(this._totalBalance);
-    this._totalBalance = 0;
+  function _win(player, slotResult) {
+    var winnings = this._totalBalance;
+    this._payOut(player);
+    return 'You Win! Result: ' + slotResult + ". Winnings: £" + winnings;
   }
 }

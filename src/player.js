@@ -1,16 +1,17 @@
-function Player() {
-  this._totalWallet = 30;
+class Player {
+  constructor() {
+    this._totalWallet = 30;
+  }
 
-  Player.prototype.walletBalance = function () {
+  walletBalance() {
     return this._totalWallet;
-  };
+  }
 
-  Player.prototype.receiveWinnings = function (amount) {
+  receiveWinnings(amount) {
     this._totalWallet += amount;
-  };
+  }
 
-  Player.prototype.insertCoin = function () {
+  insertCoin() {
     this._totalWallet -= 3;
-  };
-
+  }
 }

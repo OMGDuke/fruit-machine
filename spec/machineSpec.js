@@ -62,7 +62,7 @@ describe('Machine', function() {
 
     it('prints a message if you win', function() {
       machine.addCredit(player);
-      expect(machine.pullLever(player)).toEqual("You Win ['b', 'b', 'b', 'b']");
+      expect(machine.pullLever(player)).toEqual("You Win! Result: b,b,b,b. Winnings: £103");
     });
   });
 });

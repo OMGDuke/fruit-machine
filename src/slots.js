@@ -1,10 +1,11 @@
-function Slots() {
+class Slots {
 
-  function _slotTurn() {
+  _slotTurn() {
     var colours = ["b", "w", "g", "y"];
     return colours[Math.floor(Math.random()*colours.length)];
   }
-  Slots.prototype.spin = function () {
-    return [_slotTurn(), _slotTurn(), _slotTurn(), _slotTurn()];
-  };
+
+  spin() {
+    return [this._slotTurn(), this._slotTurn(), this._slotTurn(), this._slotTurn()];
+  }
 }
