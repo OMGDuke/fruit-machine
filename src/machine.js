@@ -1,41 +1,48 @@
 class Machine {
-  constructor() {
+  constructor(slots, player) {
     this._totalBalance = 100;
     this.readyToPlay = false;
     this.slots = slots;
+    this.player = player;
   }
 
   currentBalance() {
     return this._totalBalance;
   }
 
-  addCredit(player) {
+  addCredit() {
     if(this.readyToPlay) { throw new Error("Machine is already in credit"); }
-    player.insertCoin();
+    this.player.insertCoin();
     this._totalBalance += 3;
     this.readyToPlay = true;
   }
 
-  pullLever(player) {
+  pullLever() {
     if(!this.readyToPlay) { throw new Error("Please insert £3 to play"); }
     this.readyToPlay = false;
     var slotResult = this.slots.spin();
-    var outcome = this._calculateOutcome(slotResult);
-    return outcome === true ? this._win(player, slotResult) : this._lose(slotResult);
+    return this._calculateOutcome(slotResult);
   }
 
   _calculateOutcome(result) {
-    return !!result.reduce(function(a, b){ return (a === b) ? a : NaN; });
+    var outcome = !!result.reduce(function(a, b){ return (a === b) ? a : NaN; });
+    return outcome === true ? this._win(result) : this._lose(result);
   }
 
-  _win(player, slotResult) {
+  _win(slotResult) {
     var winnings = this._totalBalance;
-    this._payOut(player);
+    this._payOut();
     return 'You Win! Result: ' + slotResult + ". Winnings: £" + winnings;
   }
 
   _payOut(player) {
-    player.receiveWinnings(this._totalBalance);
+    this.player.receiveWinnings(this._totalBalance);
     this._totalBalance = 0;
   }
+
+  _lose(slotResult) {
+    return 'You Lose! Result: ' + slotResult + ". New Jackpot: £" + this._totalBalance;
+  }
 }
+
+module.exports = Machine;

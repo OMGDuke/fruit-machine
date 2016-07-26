@@ -23,5 +23,12 @@ describe('Player', function() {
       player.insertCoin();
       expect(player.walletBalance()).toEqual(27);
     });
+
+    it('raises an error when you do not have enough to play', function() {
+      for(var i=0; i < 10; i++){
+          player.insertCoin();
+      }
+      expect(function(){ player.insertCoin(); }).toThrowError("You do not have enough to play");
+    });
   });
 });

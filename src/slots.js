@@ -9,3 +9,5 @@ class Slots {
     return [this._slotTurn(), this._slotTurn(), this._slotTurn(), this._slotTurn()];
   }
 }
+
+module.exports = Slots;

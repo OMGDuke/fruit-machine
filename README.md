@@ -1,6 +1,23 @@
 # Fruit Machine
 Fruit Machine Tech Test written in Javascript and tested with Jasmine.
 
+## Installation
+ - Ensure you have node installed with `node -v`, if not run `brew install node`.
+ - Run `node`
+ - Run `var player = require("./src/player.js");`
+ - Run `var yourName = new player();`
+ - Run `var slots = require("./src/slots.js");`
+ - Run `var slot = new slots();`
+ - Run `var machine = require("./src/machine.js");`
+ - Run `var fruit = new machine(slot, player);`
+
+## Operation
+- To add credit run `fruit.addCredit();`
+- To pull the lever run `fruit.pullLever();`
+
+
+## Tests
+
 ## Challenge
 We are going to create a virtual fruit machine. To make things easier instead of symbols we are going to use colours: black, white, green, yellow.
 

@@ -12,6 +12,9 @@ class Player {
   }
 
   insertCoin() {
+    if(this._totalWallet < 3) { throw new Error("You do not have enough to play"); }
     this._totalWallet -= 3;
   }
 }
+
+module.exports = Player;
