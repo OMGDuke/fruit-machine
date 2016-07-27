@@ -9,7 +9,7 @@ Fruit Machine Tech Test written in Javascript and tested with Jasmine.
  - Run `var slots = require("./src/slots.js");`
  - Run `var slot = new slots();`
  - Run `var machine = require("./src/machine.js");`
- - Run `var fruit = new machine(slot, player);`
+ - Run `var fruit = new machine(slot, yourName);`
 
 ## Operation
 - To add credit run `fruit.addCredit();`
