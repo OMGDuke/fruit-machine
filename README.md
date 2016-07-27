@@ -14,9 +14,11 @@ Fruit Machine Tech Test written in Javascript and tested with Jasmine.
 ## Operation
 - To add credit run `fruit.addCredit();`
 - To pull the lever run `fruit.pullLever();`
+- To check the machines current prize pot run `fruit.currentBalance();`
 
 
 ## Tests
+- To view the tests run `open SpecRunner.html`
 
 ## Challenge
 We are going to create a virtual fruit machine. To make things easier instead of symbols we are going to use colours: black, white, green, yellow.
