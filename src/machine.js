@@ -1,4 +1,5 @@
 const PLAY_COST = 3;
+
 class Machine {
   constructor(slots, player) {
     this._totalBalance = 100;
@@ -29,8 +30,8 @@ class Machine {
   }
 
   _calculateOutcome(result) {
-    if( this._isAllMatching(result)) { return this._jackpotWin(result); }
-    if( this._isAllDifferent(result)){ return this._halfJackpotWin(result); }
+    if( this._isAllMatching(result)) { return this._payJackpotWin(result); }
+    if( this._isAllDifferent(result)){ return this._payHalfJackpotWin(result); }
     if( this._isAdjacentMatching(result)){ return this._canPayFiveTimesWin(result); }
     else { return this._lose(result); }
   }
@@ -60,13 +61,13 @@ class Machine {
     return this._totalBalance >= winnings;
   }
 
-  _jackpotWin(slotResult) {
+  _payJackpotWin(slotResult) {
     var winnings = this._totalBalance;
     this._payOut(winnings);
     return 'You Win the Jackpot! Result: ' + slotResult + ". Winnings: £" + winnings;
   }
 
-  _halfJackpotWin(slotResult) {
+  _payHalfJackpotWin(slotResult) {
     var winnings = Math.floor(this._totalBalance/2);
     this._payOut(winnings);
     return 'You Win! Result: ' + slotResult + ". Winnings: £" + winnings;
@@ -74,25 +75,23 @@ class Machine {
 
   _canPayFiveTimesWin(slotResult) {
     var winnings = PLAY_COST * 5;
-    if(this._isBalanceSufficient(winnings)) { return this._payFiveTimesWin(slotResult); }
-    else { return this._compensateFiveTimesWin(slotResult); }
+    if(this._isBalanceSufficient(winnings)) { return this._payFiveTimesWin(slotResult, winnings); }
+    else { return this._compensateFiveTimesWin(slotResult, winnings); }
   }
 
-  _payFiveTimesWin (slotResult) {
-    var winnings = PLAY_COST * 5;
+  _payFiveTimesWin (slotResult, winnings) {
     this._payOut(winnings);
     return 'You Win! Result: ' + slotResult + ". Winnings: £" + winnings;
   }
 
-  _compensateFiveTimesWin(slotResult) {
-    var winnings = PLAY_COST * 5;
-    this._compensateWins(winnings);
+  _compensateFiveTimesWin(slotResult, winnings) {
+    this._calculateCompensation(winnings);
     var availableAmount = this._totalBalance;
     this._payOut(this._totalBalance);
     return 'You Win! Result: ' + slotResult + ". Winnings: £" + availableAmount + ". You receive " + this.readyToPlay + " free spins";
   }
 
-  _compensateWins(winnings) {
+  _calculateCompensation(winnings) {
     this.readyToPlay += ((winnings - this._totalBalance) / 3);
   }
 
