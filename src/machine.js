@@ -56,18 +56,14 @@ class Machine {
     }
   }
 
-  _sufficientBalance(winnings) {
+  _isBalanceSufficient(winnings) {
     return this._totalBalance >= winnings;
   }
 
   _jackpotWin(slotResult) {
     var winnings = this._totalBalance;
-    if(this._sufficientBalance(winnings)) {
-      this._payOut(winnings);
-      return 'You Win the Jackpot! Result: ' + slotResult + ". Winnings: £" + winnings;
-    } else {
-
-    }
+    this._payOut(winnings);
+    return 'You Win the Jackpot! Result: ' + slotResult + ". Winnings: £" + winnings;
   }
 
   _halfJackpotWin(slotResult) {
@@ -78,8 +74,19 @@ class Machine {
 
   _fiveTimesWin(slotResult) {
     var winnings = PLAY_COST * 5;
-    this._payOut(winnings);
-    return 'You Win! Result: ' + slotResult + ". Winnings: £" + winnings;
+    if(this._isBalanceSufficient(winnings)) {
+      this._payOut(winnings);
+      return 'You Win! Result: ' + slotResult + ". Winnings: £" + winnings;
+    } else {
+      this._compensateWins(winnings);
+      var payout = this._totalBalance;
+      this._payOut(this._totalBalance);
+      return 'You Win! Result: ' + slotResult + ". Winnings: £" + payout + ". You receive " + this.readyToPlay + " free spins";
+    }
+  }
+
+  _compensateWins(winnings) {
+    this.readyToPlay += ((winnings - this._totalBalance) / 3);
   }
 
   _payOut(winnings) {

@@ -134,7 +134,7 @@ describe('Machine', function() {
   });
 
   describe('Gives free plays if balance doesn\'t cover winnings', function() {
-    it ('gives 1 free play when it is £3 short', function() {
+    beforeEach(function() {
       slots.spin.and.callFake(function() {
         return ['b','b','b','b'];
       });
@@ -144,8 +144,13 @@ describe('Machine', function() {
         return ['b','w','w','y'];
       });
       machine.addCredit();
+    });
+    it ('gives 4 free play when it is £12 short', function() {
       machine.pullLever();
       expect(machine.readyToPlay).toEqual(4);
+    });
+    it('tells you how much you\'ve won and how many free spins you have', function() {
+      expect(machine.pullLever()).toEqual("You Win! Result: b,w,w,y. Winnings: £3. You receive 4 free spins");
     });
   });
 });
